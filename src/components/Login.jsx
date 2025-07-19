@@ -1,11 +1,87 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "./Header";
+import { ValidateForm } from "../utils/validateForm";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "../utils/Firebase";
+import { useNavigate } from "react-router";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [showSignUp, setShowSignUp] = useState(true);
+  const [validateMessage, setValidateMessage] = useState("");
 
   const handleSignUp = () => {
     setShowSignUp(!showSignUp);
+  };
+
+  const email = useRef(null);
+  const name = useRef(null);
+  const password = useRef(null);
+
+  const handleValidateForm = (e) => {
+    e.preventDefault();
+    const message = ValidateForm(
+      email?.current?.value,
+      password?.current?.value,
+      name?.current?.value
+    );
+    setValidateMessage(message);
+    if (message) return;
+
+    if (!showSignUp) {
+      createUserWithEmailAndPassword(
+        auth,
+        email?.current?.value,
+        password?.current?.value
+      )
+        .then((userCredential) => {
+          const user = userCredential?.user;
+          navigate("/browse");
+        })
+        .catch((error) => {
+          const errorCode = error?.code;
+          const errorMessage = error?.message;
+          setValidateMessage(errorCode + "-" + errorMessage);
+        });
+    } else {
+      signInWithEmailAndPassword(
+        auth,
+        email?.current?.value,
+        password?.current?.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          updateProfile(auth.user, {
+            displayName: name?.current?.value,
+            photoURL:
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT95gUb5ESW97Bw9C7SL5Kbr1lufVqp5OGMVQ&s",
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+              navigate("/browse");
+            })
+            .catch((error) => {
+              setValidateMessage(error?.message);
+            });
+        })
+        .catch((error) => {
+          const errorCode = error?.code;
+          const errorMessage = error?.message;
+          setValidateMessage(errorCode + "-" + errorMessage);
+        });
+    }
   };
   return (
     <>
@@ -23,22 +99,29 @@ const Login = () => {
         </h1>
         {!showSignUp && (
           <input
+            ref={name}
             type="text"
             placeholder="Enter Name"
             className="p-2 my-4 bg-gray-700 w-full"
           />
         )}
         <input
+          ref={email}
           type="email"
           placeholder="Enter Email"
           className="p-2 my-4 bg-gray-700 w-full"
         />
         <input
+          ref={password}
           type="password"
           placeholder="Enter Password"
           className="p-2 my-4 bg-gray-700 w-full"
         />
-        <button className="bg-red-800 p-4 my-4 w-full rounded-2xl">
+        <p className="text-red-500 font-normal p-2 my-4">{validateMessage}</p>
+        <button
+          className="bg-red-800 p-4 my-4 w-full rounded-2xl cursor-pointer"
+          onClick={handleValidateForm}
+        >
           {showSignUp ? "Sign In" : "Sign Up"}
         </button>
         <p className="text-sm p-2 my-4 cursor-pointer" onClick={handleSignUp}>
