@@ -7,10 +7,9 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/Firebase";
-import { useNavigate } from "react-router";
+import { USER_AVATAR } from "../utils/constant";
 
 const Login = () => {
-  const navigate = useNavigate();
   const [showSignUp, setShowSignUp] = useState(true);
   const [validateMessage, setValidateMessage] = useState("");
 
@@ -39,8 +38,25 @@ const Login = () => {
         password?.current?.value
       )
         .then((userCredential) => {
-          const user = userCredential?.user;
-          navigate("/browse");
+          const user = userCredential.user;
+          updateProfile(auth.user, {
+            displayName: name?.current?.value,
+            photoURL: USER_AVATAR,
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+            })
+            .catch((error) => {
+              setValidateMessage(error?.message);
+            });
         })
         .catch((error) => {
           const errorCode = error?.code;
@@ -54,27 +70,7 @@ const Login = () => {
         password?.current?.value
       )
         .then((userCredential) => {
-          const user = userCredential.user;
-          updateProfile(auth.user, {
-            displayName: name?.current?.value,
-            photoURL:
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT95gUb5ESW97Bw9C7SL5Kbr1lufVqp5OGMVQ&s",
-          })
-            .then(() => {
-              const { uid, email, displayName, photoURL } = auth.currentUser;
-              dispatch(
-                addUser({
-                  uid: uid,
-                  email: email,
-                  displayName: displayName,
-                  photoURL: photoURL,
-                })
-              );
-              navigate("/browse");
-            })
-            .catch((error) => {
-              setValidateMessage(error?.message);
-            });
+          const user = userCredential?.user;
         })
         .catch((error) => {
           const errorCode = error?.code;
