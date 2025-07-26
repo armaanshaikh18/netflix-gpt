@@ -81,12 +81,14 @@ const Login = () => {
   };
   return (
     <>
-      <div className="absolute">
+      <div>
         <Header />
-        <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/7d2359a4-434f-4efa-9ff3-e9d38a8bde7f/web/IN-en-20250707-TRIFECTA-perspective_4faa9280-a2c5-4e07-aafc-a45ce43fea09_medium.jpg"
-          alt="logo"
-        />
+        <div className="absolute">
+          <img
+            src="https://assets.nflxext.com/ffe/siteui/vlv3/7d2359a4-434f-4efa-9ff3-e9d38a8bde7f/web/IN-en-20250707-TRIFECTA-perspective_4faa9280-a2c5-4e07-aafc-a45ce43fea09_medium.jpg"
+            alt="logo"
+          />
+        </div>
       </div>
 
       <form className="absolute right-0 left-0 w-3/12 mx-auto my-36 p-12 bg-black text-white rounded-2xl opacity-90">
