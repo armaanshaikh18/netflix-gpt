@@ -11,7 +11,8 @@ export const API_OPTIONS = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3OGM2NDVmYTZmNDE4NjYxMjIwY2YzMmY1YjNlZGEzOSIsIm5iZiI6MTc1MzAyNzQ4MC44MDQsInN1YiI6IjY4N2QxMzk4MmM1YWEzMTM0NTM4ZDc3NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.cnAZGm7IDwpkHf74rhSnFjBgZbrfdGxuv_pw-NE8lX4",
+    Authorization: "Bearer " + import.meta.env.VITE_TMDB_KEY,
   },
 };
+
+export const IMG_CARD_URL = "https://image.tmdb.org/t/p/w500/";
