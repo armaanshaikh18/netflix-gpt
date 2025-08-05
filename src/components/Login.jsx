@@ -83,12 +83,16 @@ const Login = () => {
     <>
       <div>
         <Header />
-        <div className="absolute">
-          <img src={BG_URL} alt="logo" />
+        <div className="fixed">
+          <img
+            src={BG_URL}
+            alt="logo"
+            className="h-screen object-cover md:h-auto"
+          />
         </div>
       </div>
 
-      <form className="absolute right-0 left-0 w-3/12 mx-auto my-36 p-12 bg-black text-white rounded-2xl opacity-90">
+      <form className="absolute right-0 left-0 top-60  md:top-0  md:w-3/12 mx-auto my-36 p-12 bg-black text-white rounded-2xl opacity-90">
         <h1 className="text-3xl font-bold p-2 my-2">
           {showSignUp ? "Sign In" : "Sign Up"}
         </h1>

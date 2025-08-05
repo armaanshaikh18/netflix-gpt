@@ -16,6 +16,7 @@ export const API_OPTIONS = {
     Authorization: "Bearer " + import.meta.env.VITE_TMDB_KEY,
   },
 };
+export const OPEN_AI_KEY = import.meta.env.VITE_OPEN_AI_KEY;
 
 export const SUPPORTED_LANGUAGES = [
   { identifier: "en", name: "English" },

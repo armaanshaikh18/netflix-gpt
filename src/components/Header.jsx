@@ -55,11 +55,11 @@ const Header = () => {
   };
 
   return (
-    <div className="absolute z-10 top-0 w-screen left-0 bg-gradient-to-b from-black flex justify-between">
-      <img className="w-1/12" src={LOGO} alt="logo" />
+    <div className="absolute z-10 top-0 w-screen left-0 bg-gradient-to-b from-black flex md:flex-row flex-col justify-between">
+      <img className="w-3/12 md:w-1/12 mx-auto md:mx-0" src={LOGO} alt="logo" />
 
       {user && (
-        <div className="flex p-2 gap-2">
+        <div className="flex p-2 justify-evenly md:gap-2">
           {searchGptview && (
             <select
               className="bg-red-700 text-white font-bold rounded-lg p-2 border-none"
