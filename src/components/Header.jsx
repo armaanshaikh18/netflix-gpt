@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { addUser, removeUser } from "../redux/userSlice";
 import { LOGO, LOGO_IMG, SUPPORTED_LANGUAGES } from "../utils/constant";
 import { toggleSearchview } from "../redux/gptSlice";
-import { lang } from "../utils/langConstant";
 import { langChange } from "../redux/langSlice";
 
 const Header = () => {
@@ -34,7 +33,7 @@ const Header = () => {
             email: email,
             displayName: displayName,
             photoURL: photoURL,
-          })
+          }),
         );
         navigate("/browse");
       } else {

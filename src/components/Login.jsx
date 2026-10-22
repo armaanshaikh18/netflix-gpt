@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
-import { ValidateForm } from "../utils/validateForm";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -8,6 +7,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../utils/Firebase";
 import { BG_URL, USER_AVATAR } from "../utils/constant";
+import { ValidateForm } from "../utils/ValidateForm";
 
 const Login = () => {
   const [showSignUp, setShowSignUp] = useState(true);
@@ -26,7 +26,7 @@ const Login = () => {
     const message = ValidateForm(
       email?.current?.value,
       password?.current?.value,
-      name?.current?.value
+      name?.current?.value,
     );
     setValidateMessage(message);
     if (message) return;
@@ -35,7 +35,7 @@ const Login = () => {
       createUserWithEmailAndPassword(
         auth,
         email?.current?.value,
-        password?.current?.value
+        password?.current?.value,
       )
         .then((userCredential) => {
           const user = userCredential.user;
@@ -51,7 +51,7 @@ const Login = () => {
                   email: email,
                   displayName: displayName,
                   photoURL: photoURL,
-                })
+                }),
               );
             })
             .catch((error) => {
@@ -67,7 +67,7 @@ const Login = () => {
       signInWithEmailAndPassword(
         auth,
         email?.current?.value,
-        password?.current?.value
+        password?.current?.value,
       )
         .then((userCredential) => {
           const user = userCredential?.user;

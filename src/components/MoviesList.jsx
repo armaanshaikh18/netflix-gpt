@@ -1,6 +1,5 @@
 import React from "react";
 import MoviesCards from "./MoviesCards";
-import { IMG_CARD_URL } from "../utils/constant";
 
 const MoviesList = ({ title, movies }) => {
   return (
